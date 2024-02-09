@@ -10,7 +10,7 @@ class Room(models.Model):
 
 
 class RoomManager(models.Model):
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
     commentary = models.TextField(blank=True)
 

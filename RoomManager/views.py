@@ -1,6 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.views import View
 from RoomManager.models import Room
+from RoomManager.models import RoomManager, Meta
+from datetime import date
+from datetime import timedelta
 
 
 # Create your views here.
@@ -96,4 +99,20 @@ class RoomDelete(View):
 class RoomReserve(View):
     def get(self, request, id):
         room = Room.objects.get(id=id)
-        return render(request, 'room_reserve.html', {'room': room})
+        today = date.today()
+        return render(request, 'room_reserve.html', {'room': room, 'today': today})
+
+    def post(self, request, id):
+        today = date.today()
+        room = Room.objects.get(id=id)
+        if request.POST.get('commentary'):
+            commentary = request.POST.get('commentary')
+        else:
+            commentary = ''
+        date_user = request.POST.get('date')
+        if date_user >= str(today):
+            a = RoomManager.objects.create(date=date_user, commentary=commentary,  room_id=room)
+            return HttpResponse(a)
+        else:
+            ero = 'Date is from the past'
+            return render(request, 'room_reserve.html', {'room': room, 'ero': ero})
