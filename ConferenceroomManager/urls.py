@@ -19,5 +19,9 @@ from django.urls import path
 from RoomManager import views
 
 urlpatterns = [
-    path('', views.home, name='home')
+    path('', views.home, name='home'),
+    path('main/', views.main, name='main'),
+    path('room/new/', views.AddRoom.as_view(), name='AddRoom'),
+    path('rooms', views.rooms, name='rooms')
+
 ]

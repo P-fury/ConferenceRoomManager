@@ -1,0 +1,31 @@
+
+.bnt{
+  background-color: #793bbe;
+  border: none;
+  color: #e7e7e7;
+  padding: 6px 12px;
+  text-decoraation: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-family: Monospaced, monospace;
+  font-size: small;
+
+}
+.bnt:hover {
+  background-color: #5303a6;
+  transition: 0.4s;
+}
+ul {
+    font-family: Monospaced, monospace;
+    list-style-type: square;
+}
+
+body{
+    font-family: Monospaced, monospace;
+}
+
+input[type='checkbox'] {
+    accent-color: #793bbe;
+    width: 16px;
+    height: 16px;
+}

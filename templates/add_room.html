@@ -1,0 +1,22 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    
+    
+    
+    <br>
+<form method="POST">
+    {% csrf_token%}
+    <input type="text" name="name" placeholder="Room Name">
+    <input type="number" name="capacity" placeholder="Capacity of room">
+    <input type="checkbox" name="projector" value=True>Projector</input>
+    <input class="bnt" type="submit" value="add">
+</form>
+
+{% if ero %}
+    {{ ero }}
+{% endif %}
+    
+{% endblock %}

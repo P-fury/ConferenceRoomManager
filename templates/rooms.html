@@ -1,0 +1,24 @@
+{% extends 'home.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    
+
+<ul>
+    {% for room in rooms %}
+    <li>
+        NAME: <strong>{{ room.room_name }}</strong>
+    CAPACITY: <strong>{{ room.room_capacity }}</strong>
+{#    {{ room.avalibilty }}#}
+    {% if room.projector %}
+    PROJECTOR: <input class="chk" type="checkbox" value="true" checked>
+    {% else %}
+    PROJECTOR: <input class="chk" type="checkbox" value="true" >
+    {% endif %}
+    <input class="bnt" type="submit" value="edit">
+    <input class="bnt" type="button" value="delete">
+    <input class="bnt" type="button" value="book">
+    </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
