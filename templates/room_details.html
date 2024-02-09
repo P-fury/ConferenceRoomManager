@@ -1,22 +1,22 @@
 {% extends 'home.html' %}
 {% block content %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
-    
-NAME: <a href="{% url "RoomDetails" id=room.id %}"><strong>{{ room.room_name }}</strong></a>
-CAPACITY: <strong>{{ room.room_capacity }}</strong>
-   {% if room.projector %}
-                PROJECTOR: <input class="chk" type="checkbox" value="true" checked>
-            {% else %}
-                PROJECTOR: <input class="chk" type="checkbox" value="true">
-            {% endif %}
-                <a href="{% url "EditRoom" id=room.id %}"><input class="bnt" type="submit" value="edit"></a>
-                <a href="{% url "RoomDelete" id=room.id %}"><input class="bnt" type="button" value="delete"></a>
-                <a href="{% url "RoomReserve" id=room.id %}"><input class="bnt" type="button" value="book"></a>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+    NAME: <a href="{% url "RoomDetails" id=room.id %}"><strong>{{ room.room_name }}</strong></a>
+    CAPACITY: <strong>{{ room.room_capacity }}</strong>
+    {% if room.projector %}
+        PROJECTOR: <input class="chk" type="checkbox" value="true" checked>
+    {% else %}
+        PROJECTOR: <input class="chk" type="checkbox" value="true">
+    {% endif %}
+    <a href="{% url "EditRoom" id=room.id %}"><input class="bnt" type="submit" value="edit"></a>
+    <a href="{% url "RoomDelete" id=room.id %}"><input class="bnt" type="button" value="delete"></a>
+    <a href="{% url "RoomReserve" id=room.id %}"><input class="bnt" type="button" value="book"></a>
     <ul>
-    {% for room in room.roommanager_set.all %}
-    <li>{{ room.date }} {{ room.commentary }}</li>
-    {% endfor %}
+        {% for room in room.roommanager_set.all %}
+            <li>{{ room.date }} {{ room.commentary }}</li>
+        {% endfor %}
     </ul>
-    
+
 {% endblock %}

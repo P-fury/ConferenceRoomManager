@@ -29,6 +29,4 @@ urlpatterns = [
     path('room/delete/<int:id>', views.RoomDelete.as_view(), name='RoomDelete'),
     path('room/reserve/<int:id>', views.RoomReserve.as_view(), name='RoomReserve'),
 
-
-
 ]

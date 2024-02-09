@@ -1,10 +1,10 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
 <ul class="horizontal">
-  <li><a class="active" href="{% url 'main' %}">Home</a></li>
-  <li><a href="{%  url 'rooms' %}">List of room</a></li>
-  <li><a href="{% url 'AddRoom' %}">Add room</a></li>
-  <li class="rightli" style="float:right"><a href="{% url 'about' %}">About</a></li>
+    <li><a class="active" href="{% url 'main' %}">Home</a></li>
+    <li><a href="{% url 'rooms' %}">List of room</a></li>
+    <li><a href="{% url 'AddRoom' %}">Add room</a></li>
+    <li class="rightli" style="float:right"><a href="{% url 'about' %}">About</a></li>
 </ul>
 
 {% block content %}

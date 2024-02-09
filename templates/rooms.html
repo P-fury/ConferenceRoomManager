@@ -1,7 +1,7 @@
 {% extends 'home.html' %}
 {% block content %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
 
     <ul>
@@ -9,10 +9,9 @@
             {% if not room %}
                 -Unfortunetly we dont have any conference room-
             {% endif %}
-            <li> 
+            <li>
                 NAME: <a href="{% url "RoomDetails" id=room.id %}"><strong>{{ room.room_name }}</strong></a>
                 CAPACITY: <strong>{{ room.room_capacity }}</strong>
-                {#    {{ room.avalibilty }}#}
                 {% if room.projector %}
                     PROJECTOR: <input class="chk" type="checkbox" value="true" checked>
                 {% else %}
@@ -21,14 +20,14 @@
                 <a href="{% url "EditRoom" id=room.id %}"><input class="bnt" type="submit" value="edit"></a>
                 <a href="{% url "RoomDelete" id=room.id %}"><input class="bnt" type="button" value="delete"></a>
                 <a href="{% url "RoomReserve" id=room.id %}"><input class="bnt" type="button" value="book"></a>
-            {% for date_ids in room.roommanager_set.all %}
-                {% if today == date_ids.date %}
-                -is booked for today-
-                {% endif %}
+                {% for date_ids in room.roommanager_set.all %}
+                    {% if today == date_ids.date %}
+                        -is booked for today-
+                    {% endif %}
                 {% endfor %}
             </li>
-            
-                
+
+
         {% endfor %}
     </ul>
 {% endblock %}

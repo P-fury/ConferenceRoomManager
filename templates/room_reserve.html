@@ -1,26 +1,26 @@
 {% extends 'home.html' %}
 {% block content %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <form method="POST">
-    {% csrf_token %}
+        {% csrf_token %}
         <br>
-    <strong>You booking room {{ room.room_name }}</strong>
-    <br>
-<input type="text" name="commentary" value="" placeholder="commentary">
-<input type="date" name="date" value="today" min="{{ today }}">
-<input class="bnt" type="submit">
-    <br>
-        <strong>DATES ALREADY TAKEN:</strong>   
-     <ul>
-    {% for room in room.roommanager_set.all %}
-    <li>{{ room.date }} {{ room.commentary }}</li>
-    {% endfor %}
-    </ul>
-    
-    {% if ero %}
-    {{ ero }}
-    {% endif %}
-</form>
+        <strong>You booking room {{ room.room_name }}</strong>
+        <br>
+        <input type="text" name="commentary" value="" placeholder="commentary">
+        <input type="date" name="date" value="today" min="{{ today }}">
+        <input class="bnt" type="submit">
+        <br>
+        <strong>DATES ALREADY TAKEN:</strong>
+        <ul>
+            {% for room in room.roommanager_set.all %}
+                <li>{{ room.date }} {{ room.commentary }}</li>
+            {% endfor %}
+        </ul>
+
+        {% if ero %}
+            {{ ero }}
+        {% endif %}
+    </form>
 {% endblock %}
 

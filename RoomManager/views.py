@@ -37,7 +37,7 @@ class MainView(View):
 
 class AddRoom(View):
     def get(self, request):
-        return render(request, 'add_room.html')
+        return render(request, 'room_add.html')
 
     def post(self, request):
         if len(request.POST.get('name')) > 0:
@@ -54,13 +54,13 @@ class AddRoom(View):
                     return redirect('main')
                 else:
                     ero = "Wrong room size"
-                    return render(request, 'add_room.html', {'ero': ero})
+                    return render(request, 'room_add.html', {'ero': ero})
             else:
                 ero = 'Name in use'
-                return render(request, 'add_room.html', {'ero': ero})
+                return render(request, 'room_add.html', {'ero': ero})
         else:
             ero = 'Wrong room name'
-            return render(request, 'add_room.html', {'ero': ero})
+            return render(request, 'room_add.html', {'ero': ero})
 
 
 def rooms(request):

@@ -1,14 +1,14 @@
 {% extends 'home.html' %}
 {% block content %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
-<br>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <br>
     NAME: <a href="{% url "RoomDetails" id=room.id %}"><strong>{{ room.room_name }}</strong></a>
     CAPACITY: <strong>{{ room.room_capacity }}</strong>
     <form method="POST">
-    {% csrf_token %}
-     WANNA DELETE THIS ROOM:  <input class="bnt" type="submit" name="YES" value="YES">
-    <input class="bnt" type="submit" name="NO" value="NO">
+        {% csrf_token %}
+        WANNA DELETE THIS ROOM: <input class="bnt" type="submit" name="YES" value="YES">
+        <input class="bnt" type="submit" name="NO" value="NO">
     </form>
 {% endblock %}
 
