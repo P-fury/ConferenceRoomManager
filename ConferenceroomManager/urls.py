@@ -21,7 +21,12 @@ from RoomManager import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('main/', views.main, name='main'),
+    path('rooms', views.rooms, name='rooms'),
+    path('room/<int:id>', views.room_details, name='RoomDetails'),
     path('room/new/', views.AddRoom.as_view(), name='AddRoom'),
-    path('rooms', views.rooms, name='rooms')
+    path('room/edit/<int:id>', views.RoomEdit.as_view(), name='EditRoom'),
+    path('room/delete/<int:id>', views.RoomDelete.as_view(), name='RoomDelete'),
+    path('room/reserve/<int:id>', views.RoomReserve.as_view(), name='RoomReserve'),
+
 
 ]

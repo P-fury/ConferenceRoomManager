@@ -1,0 +1,29 @@
+{% extends 'home.html' %}
+{% block content %}
+        {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    
+    
+    
+    
+    <form method="POST">
+    {%  csrf_token %}
+NAME:<input type="text" name="room_name" value="{{ room.room_name }}">
+CAPACITY:<input type="number" name="room_capacity" value="{{ room.room_capacity }}">
+{% if room.projector %}
+    PROJECTOR: <input class="chk" type="checkbox" name="checkbox" value="True" checked>
+{% else %}
+    PROJECTOR: <input class="chk" type="checkbox" name="checkbox" value="False">
+{% endif %}
+    <input class="bnt" type="submit" value="edit">
+    </form>
+    
+    {% if ero %}
+    {{ ero }}
+    {% endif %}
+    
+    
+    
+    
+   
+{% endblock %}

@@ -1,24 +1,27 @@
 {% extends 'home.html' %}
 {% block content %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
-    
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
 
-<ul>
-    {% for room in rooms %}
-    <li>
-        NAME: <strong>{{ room.room_name }}</strong>
-    CAPACITY: <strong>{{ room.room_capacity }}</strong>
-{#    {{ room.avalibilty }}#}
-    {% if room.projector %}
-    PROJECTOR: <input class="chk" type="checkbox" value="true" checked>
-    {% else %}
-    PROJECTOR: <input class="chk" type="checkbox" value="true" >
-    {% endif %}
-    <input class="bnt" type="submit" value="edit">
-    <input class="bnt" type="button" value="delete">
-    <input class="bnt" type="button" value="book">
-    </li>
-    {% endfor %}
+
+    <ul>
+        {% for room in rooms %}
+            {% if not room %}
+                -Unfortunetly we dont have any conference room-
+            {% endif %}
+            <li> 
+                NAME: <a href="{% url "RoomDetails" id=room.id %}"><strong>{{ room.room_name }}</strong></a>
+                CAPACITY: <strong>{{ room.room_capacity }}</strong>
+                {#    {{ room.avalibilty }}#}
+                {% if room.projector %}
+                    PROJECTOR: <input class="chk" type="checkbox" value="true" checked>
+                {% else %}
+                    PROJECTOR: <input class="chk" type="checkbox" value="true">
+                {% endif %}
+                <a href="{% url "EditRoom" id=room.id %}"><input class="bnt" type="submit" value="edit"></a>
+                <a href="{% url "RoomDelete" id=room.id %}"><input class="bnt" type="button" value="delete"></a>
+                <a href="{% url "RoomReserve" id=room.id %}"><input class="bnt" type="button" value="book"></a>
+            </li>
+        {% endfor %}
     </ul>
 {% endblock %}

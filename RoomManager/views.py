@@ -42,4 +42,58 @@ class AddRoom(View):
 
 def rooms(request):
     rooms_lst = Room.objects.all()
-    return render(request,'rooms.html', {'rooms': rooms_lst})
+    return render(request, 'rooms.html', {'rooms': rooms_lst})
+
+
+def room_details(request, id):
+    room = Room.objects.get(id=id)
+    return render(request, 'room_details.html', {'room': room})
+
+
+class RoomEdit(View):
+    def get(self, request, id):
+        room = Room.objects.get(id=id)
+        return render(request, 'room_edit.html', {"room": room})
+
+    def post(self, request, id):
+        room = Room.objects.get(id=id)
+        room_name = request.POST.get('room_name')
+        if room_name == '':
+            ero = "Room name cannot be empty"
+            return render(request, 'room_edit.html', {'ero': ero, "room": room})
+        # if Room.objects.filter(room_name=room_name).exists():
+        #     ero = "Room name exist"  ======exisitng name of room
+        #     return render(request, 'room_edit.html', {'ero': ero, "room": room})
+        room_capacity = request.POST.get('room_capacity')
+        if room_capacity <= '0':
+            ero = "Room capacity cannot be less then 1"
+            return render(request, 'room_edit.html', {'ero': ero, "room": room})
+        if request.POST.get('checkbox'):
+            checkbox = True
+        else:
+            checkbox = False
+        room.room_name = room_name
+        room.room_capacity = int(room_capacity)
+        room.projector = checkbox
+        room.save()
+        return redirect('rooms')
+
+
+class RoomDelete(View):
+    def get(self, request, id):
+        room = Room.objects.get(id=id)
+        return render(request, 'room_delete.html', {'room': room})
+
+    def post(self, request, id):
+        room = Room.objects.get(id=id)
+        if request.POST.get("YES") == "YES":
+            room.delete()
+            return redirect('rooms')
+        elif request.POST.get("NO") == "NO":
+            return redirect('rooms')
+
+
+class RoomReserve(View):
+    def get(self, request, id):
+        room = Room.objects.get(id=id)
+        return render(request, 'room_reserve.html', {'room': room})
