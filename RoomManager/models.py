@@ -10,10 +10,10 @@ class Room(models.Model):
 
 
 class RoomManager(models.Model):
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
     commentary = models.TextField(blank=True)
 
-
-class Meta:
-    unique_together = ('room_id', 'date')
+    class Meta:
+        unique_together = ('room_id', 'date')
+        ordering = ('date',)

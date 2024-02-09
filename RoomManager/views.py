@@ -1,9 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, HttpResponse, redirect
 from django.views import View
 from RoomManager.models import Room
-from RoomManager.models import RoomManager, Meta
-from datetime import date
-from datetime import timedelta
+from RoomManager.models import RoomManager
+from datetime import date, datetime
 
 
 # Create your views here.
@@ -11,8 +11,28 @@ def home(request):
     return render(request, 'home.html')
 
 
-def main(request):
-    return render(request, 'main.html')
+def about(request):
+    return render(request, 'about.html')
+
+
+class MainView(View):
+    def get(self, request):
+        searched_room_name = request.GET.get('room_name', '')
+        searched_room_capacity = request.GET.get('room_capacity')
+        searched_projector_YES = request.GET.get('checkbox')
+        searched_projector_NO = request.GET.get('checkbox2')
+        rooms_lst = Room.objects.all()
+        rooms_lst = rooms_lst.filter(room_name__icontains=searched_room_name)
+        if searched_room_capacity:
+            rooms_lst = rooms_lst.filter(room_capacity__gte=searched_room_capacity)
+        if searched_projector_YES:
+            rooms_lst = rooms_lst.filter(projector=searched_projector_YES)
+        if searched_projector_NO:
+            rooms_lst = rooms_lst.filter(projector=searched_projector_NO)
+        if len(rooms_lst) == 0:
+            ero = 'NO ROOMS FOUND'
+            return render(request, 'main.html', {'rooms': rooms_lst, "ero": ero})
+        return render(request, 'main.html', {'rooms': rooms_lst})
 
 
 class AddRoom(View):
@@ -45,7 +65,9 @@ class AddRoom(View):
 
 def rooms(request):
     rooms_lst = Room.objects.all()
-    return render(request, 'rooms.html', {'rooms': rooms_lst})
+    today = date.today()
+
+    return render(request, 'rooms.html', {'rooms': rooms_lst, 'today': today})
 
 
 def room_details(request, id):
@@ -64,9 +86,6 @@ class RoomEdit(View):
         if room_name == '':
             ero = "Room name cannot be empty"
             return render(request, 'room_edit.html', {'ero': ero, "room": room})
-        # if Room.objects.filter(room_name=room_name).exists():
-        #     ero = "Room name exist"  ======exisitng name of room
-        #     return render(request, 'room_edit.html', {'ero': ero, "room": room})
         room_capacity = request.POST.get('room_capacity')
         if room_capacity <= '0':
             ero = "Room capacity cannot be less then 1"
@@ -102,17 +121,22 @@ class RoomReserve(View):
         today = date.today()
         return render(request, 'room_reserve.html', {'room': room, 'today': today})
 
-    def post(self, request, id):
+    def post(self, request, id, ):
         today = date.today()
         room = Room.objects.get(id=id)
         if request.POST.get('commentary'):
-            commentary = request.POST.get('commentary')
+            new_commentary = request.POST.get('commentary')
         else:
-            commentary = ''
+            new_commentary = '...'
         date_user = request.POST.get('date')
         if date_user >= str(today):
-            a = RoomManager.objects.create(date=date_user, commentary=commentary,  room_id=room)
-            return HttpResponse(a)
+            date_format = datetime.strptime(date_user, "%Y-%m-%d").date()
+            if date_format in [x.date for x in room.roommanager_set.all()]:
+                ero = 'Date already taken'
+                return render(request, 'room_reserve.html', {'room': room, 'ero': ero})
+            RoomManager.objects.create(date=date_user, commentary=new_commentary, room_id_id=room.id)
+            ero = F"You Booked {room.room_name} room at {date_user}"
+            return render(request, 'room_reserve.html', {'room': room, 'ero': ero})
         else:
             ero = 'Date is from the past'
             return render(request, 'room_reserve.html', {'room': room, 'ero': ero})

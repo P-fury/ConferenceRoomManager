@@ -21,7 +21,14 @@
                 <a href="{% url "EditRoom" id=room.id %}"><input class="bnt" type="submit" value="edit"></a>
                 <a href="{% url "RoomDelete" id=room.id %}"><input class="bnt" type="button" value="delete"></a>
                 <a href="{% url "RoomReserve" id=room.id %}"><input class="bnt" type="button" value="book"></a>
+            {% for date_ids in room.roommanager_set.all %}
+                {% if today == date_ids.date %}
+                -is booked for today-
+                {% endif %}
+                {% endfor %}
             </li>
+            
+                
         {% endfor %}
     </ul>
 {% endblock %}

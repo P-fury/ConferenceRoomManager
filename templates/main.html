@@ -1,10 +1,35 @@
 {% extends 'home.html' %}
-<body>
-
 {% block content %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
+    <form method="get">
+    <br>
+    FIND YOUR ROOM OF INTEREST:
+    <br>
+    Room Name:
+    <input type="text" name="room_name" placeholder="Room Name">
+    Room Capacity:
+    <input type="number" name="room_capacity" placeholder="Room Capacity">
+    Projector:
+    YES:<input class="chk" name="checkbox" type="checkbox" value="True">
+    NO:<input class="chk" name="checkbox2" type="checkbox" value="False">
+    <input class="bnt" type="submit" value="search">
 
-THIS IS MAIN PAGE
+
+    <ul>
+        {% for room in rooms %}
+            <li>{{ forloop.counter }} <a
+                    href="{% url "RoomDetails" id=room.id %}">{{ room.room_name }}</a> {{ room.room_capacity }}
+                {% if room.projector %}
+                    PROJECTOR: <input class="chk" type="checkbox" value="true" checked>
+                {% else %}
+                    PROJECTOR: <input class="chk" type="checkbox" value="true">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if ero %}
+        {{ ero }}
+    {% endif %}
 
 {% endblock %}
-
-</body>

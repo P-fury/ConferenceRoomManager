@@ -4,10 +4,19 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/button.css' %}">
     <form method="POST">
     {% csrf_token %}
-<input type="text" name="commentary" value="commentary">
+        <br>
+    <strong>You booking room {{ room.room_name }}</strong>
+    <br>
+<input type="text" name="commentary" value="" placeholder="commentary">
 <input type="date" name="date" value="today" min="{{ today }}">
 <input class="bnt" type="submit">
-    
+    <br>
+        <strong>DATES ALREADY TAKEN:</strong>   
+     <ul>
+    {% for room in room.roommanager_set.all %}
+    <li>{{ room.date }} {{ room.commentary }}</li>
+    {% endfor %}
+    </ul>
     
     {% if ero %}
     {{ ero }}
